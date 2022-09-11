@@ -45,6 +45,7 @@ void FileLinesCalculator::start()
 	for (auto i = 0; i < m_threadCount - 2; i++) {
 		threads.push_back(std::thread(&FileLinesCalculator::startCalculate, this, i));
 		m_countRunThread++;
+
 		//thread.join();
 	}
 
@@ -74,14 +75,14 @@ void FileLinesCalculator::startCalculate(int thrNUm)
 {
 	std::string filePath;
 	while (!m_vecOfFiles.empty()) {
-		m_mutex.lock();
+			m_mutex.lock();
 			filePath = m_vecOfFiles.back();
 			m_vecOfFiles.pop_back();
 			m_mutex.unlock();
 			calculateLine(filePath);
 	}
 	m_countRunThread--;
-	if (m_vecOfFiles.empty() && m_countRunThread == 0) {
+	if (m_countRunThread == 0) {
 		printResult();
 	}
 }
