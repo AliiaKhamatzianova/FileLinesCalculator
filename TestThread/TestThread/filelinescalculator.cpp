@@ -72,22 +72,15 @@ void FileLinesCalculator::calculateLine(const std::string &fileName)
 
 void FileLinesCalculator::startCalculate(int thrNUm)
 {
-	
 	std::string filePath;
-	bool flag = true;
-	while (flag) {
+	while (!m_vecOfFiles.empty()) {
 		m_mutex.lock();
-		if(!m_vecOfFiles.empty()) {
 			filePath = m_vecOfFiles.back();
 			m_vecOfFiles.pop_back();
 			m_mutex.unlock();
 			calculateLine(filePath);
-		} else {
-			m_mutex.unlock();
-			flag = false;
-			m_countRunThread--;
-		}
 	}
+	m_countRunThread--;
 	if (m_vecOfFiles.empty() && m_countRunThread == 0) {
 		printResult();
 	}
