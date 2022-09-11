@@ -41,13 +41,19 @@ void FileLinesCalculator::printResult()
 
 void FileLinesCalculator::start()
 {
-	for (auto i = 0; i < m_threadCount - 1; i++) {
-		std::thread thread(&FileLinesCalculator::startCalculate, this);
+	std::vector<std::thread> threads;
+	for (auto i = 0; i < m_threadCount - 2; i++) {
+		threads.push_back(std::thread(&FileLinesCalculator::startCalculate, this, i));
 		m_countRunThread++;
-		thread.join();
+		//thread.join();
 	}
 
-	startCalculate();
+	for (auto& thr : threads)
+	{
+		thr.join();
+	}
+
+	startCalculate(m_threadCount);
 }
 
 void FileLinesCalculator::calculateLine(const std::string &fileName)
@@ -64,8 +70,9 @@ void FileLinesCalculator::calculateLine(const std::string &fileName)
 	
 }
 
-void FileLinesCalculator::startCalculate()
+void FileLinesCalculator::startCalculate(int thrNUm)
 {
+	
 	std::string filePath;
 	bool flag = true;
 	while (flag) {

@@ -6,7 +6,7 @@
 
 int main()
 {
-	FileLinesCalculator fileCalc("C:\\Users\\admin\\source\\repos\\TestThread\\TestThread\\rootDir");
+	FileLinesCalculator fileCalc("D:\\github\\FileLinesCalculator\\TestThread\\TestThread\\rootDir");
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"

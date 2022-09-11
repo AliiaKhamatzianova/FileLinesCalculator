@@ -21,10 +21,12 @@ private:
 	static std::mutex m_mutex;
 	std::atomic_int m_countRunThread;
 
+
     void printResult();
 	void start();
     void calculateLine(const std::string& fileName);
-	void startCalculate();
+	void startCalculate(int thrNUm);
+
 };
 
 #endif // FILELINESCALCULATOR_H
